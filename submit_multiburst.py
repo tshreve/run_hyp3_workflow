@@ -23,9 +23,11 @@ def parse_arguments():
     min_lat: Minimum latitude for search area
     max_lat: Maximum latitude for search area
     orb: Relative orbit number
+    date1: Start date for search (YYYY-MM-DD)
+    date2: End date for search (YYYY-MM-DD)
     """
     if len(sys.argv) < 10:
-        print("Usage: submit_multiburst.py job_name max_temp_base_days submit_true seasonal_true fall_spring_true min_lon max_lon min_lat max_lat orb")
+        print("Usage: submit_multiburst.py job_name max_temp_base_days submit_true seasonal_true fall_spring_true min_lon max_lon min_lat max_lat orb date1 date2")
         sys.exit(1)
     
     return {
@@ -38,7 +40,9 @@ def parse_arguments():
         'max_lon': float(sys.argv[7]),
         'min_lat': float(sys.argv[8]),
         'max_lat': float(sys.argv[9]),
-        'orb': int(sys.argv[10])
+        'orb': int(sys.argv[10]),
+        'date1': sys.argv[11],
+        'date2': sys.argv[12]
     }
 
 # Set stack start and end dates, as well as search parameters
@@ -122,7 +126,6 @@ def generate_pairs_for_all_stacks(stacks, max_baseline, include_seasonal=False, 
 def generate_pairs(stack, max_baseline, include_seasonal=False, include_fallspring=False):
     """Generate pairs based on temporal baseline criteria"""
     sbas_pairs = set()
-    print(include_fallspring)
     # Standard pairs within max_baseline
     for reference, rt in stack.loc[::-1, ['sceneName', 'temporalBaseline']].itertuples(index=False):
         secondaries = stack.loc[
@@ -162,7 +165,7 @@ def generate_pairs(stack, max_baseline, include_seasonal=False, include_fallspri
 def submit_multi_burst_jobs(date_grouped_pairs, job_name_prefix):
     """Submit InSAR jobs grouped by acquisition date pairs"""
     try:
-        hyp3 = sdk.HyP3(prompt="password")
+        hyp3 = sdk.HyP3()
         print(f"Submitting job {job_name_prefix}")
 
         job_ids = []
@@ -198,7 +201,7 @@ def main():
     args = parse_arguments()
     
     # Search for stacks by burst ID
-    stacks = search_stacks(min_lon = args['min_lon'], max_lon = args['max_lon'], min_lat = args['min_lat'], max_lat = args['max_lat'], orb = args['orb'])
+    stacks = search_stacks(stack_start=args['date1'], stack_end=args['date2'], min_lon = args['min_lon'], max_lon = args['max_lon'], min_lat = args['min_lat'], max_lat = args['max_lat'], orb = args['orb'])
 
     # Generate pairs across all stacks and group by date
     date_grouped_pairs = generate_pairs_for_all_stacks(

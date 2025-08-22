@@ -15,25 +15,25 @@ if __name__ == '__main__':
     client = Client(threads_per_worker=2, n_workers=5)
     print(client.dashboard_link)
 
-
-username = 'username'
-password = 'password'
-
 # add data folder here 
 folder = sys.argv[1]
 
 # parallel processing works well with username and password input here
-# could also try adding credentials from a `.netrc` file.
+#! trying to add credentials from a `.netrc` file, but might not work smoothly
 try:
-    hyp3 = HyP3(username=username,password=password)
+    hyp3 = HyP3()
+    print("Successfully authenticated using .netrc credentials")
+
 except:
-    print("Error: could not authenticate Earthdata account, check username and password.")
-    sys.exit(1)
+        print(f"Error: could not authenticate Earthdata account: {e}")
+        print("Make sure your ~/.netrc file exists with proper permissions (chmod 600)")    
+        sys.exit(1)
     
 # job to download
 jname = sys.argv[2] 
 
 # download zip files to chosen folder
+#! sometimes attempts to download multiple times with dask?
 job = hyp3.find_jobs(name=jname)
-#job = hyp3.watch(job)
+job = hyp3.watch(job)
 insar_products = job.download_files(folder)

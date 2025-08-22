@@ -1,4 +1,4 @@
-# download_hyp3
+# run_hyp3
 This script is for automatically running all steps needed to submit, download, and prepare HyP3 multiburst interferograms for ingestion into MintPy, then running MintPy with default settings. It uses scripts from the repos [merge_hyp3](https://github.com/tshreve/merge_hyp3) and [download_hyp3](https://github.com/tshreve/download_hyp3).
 
 ## Table of Contents
@@ -18,16 +18,27 @@ git clone https://github.com/tshreve/run_hyp3_workflow.git
 echo 'dask
 hyp3_sdk
 asf_search
-osgeo
+gdal
 numpy
 mintpy' > run_hyp3_dependencies.txt
  ```
 
 ```bash
 conda create --name run_hyp3 --file run_hyp3_dependencies.txt
+conda activate run_hyp3
  ```
 
+ 3. Update [Earthdata login](https://urs.earthdata.nasa.gov/home) credentials in ```~/.netrc``` file:
+```bash
+echo 'machine urs.earthdata.nasa.gov
+    login YOUR_USERNAME
+    password YOUR_PASSWORD' >> ~/.netrc
+ ```
+ 
+
 ## Usage
+
+
 To run, use the following commands:  <br>
 1. To submit jobs to HyP3: <br>
 ```bash
@@ -40,11 +51,13 @@ where: <br>
 ```max_lon``` : Maximum longitude of AOI <br>
 ```min_lat``` : Minimum latitude of AOI <br>
 ```max_lat``` : Maximum latitude of AOI <br>
-```orb``` : Relative orbit <br>
+```orb``` : Relative orbit (can be obtained through the [ASF Vertex Data Search](https://search.asf.alaska.edu/#/)) <br>
 ```max_temp_base_days``` : maximum temporal baseline for nearest neighbor pairs  <br>
  <br>
 
-2.  To download and prepare HyP3 interferograms, and run MintPy with default settings:<br>
+You will be prompted to check the created text file to ensure you are submitting the correct dates.
+ <br>
+2.  Once submitted jobs are finished, download and prepare HyP3 interferograms, and run MintPy with default settings:<br>
  ```bash
 ./run_hyp3_workflow.sh 2 job_name
 ```
@@ -55,7 +68,6 @@ where: <br>
 ```job_name```: HyP3 job name <br>
 ```filter_strength``` : interferogram filter strength <br>
  <br>
-
 ## Contributing
 Contributions are encouraged! I will do my best to continue updating this script, but if you've found ways to improve it on your own, feel free to create a PR using the following:
 
