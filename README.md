@@ -11,6 +11,7 @@ This script is for automatically running all steps needed to submit, download, a
 1. Clone the repository:
 ```bash
 git clone https://github.com/tshreve/run_hyp3_workflow.git
+cd run_hyp3_workflow/
 ```
 
 2. Install dependencies for download using *run_hyp3_dependencies.txt* in a conda environment:
