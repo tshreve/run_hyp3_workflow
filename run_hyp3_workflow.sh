@@ -93,7 +93,7 @@ if [ "$STEP" == "2" ]; then
     ln -s "$folder"/"$burst_job"/* "$mintpy_folder"/"$burst_job"/data/.
 
     smallbaselineApp.py --dir "$mintpy_folder"/"$burst_job"  "$mintpy_folder"/"$burst_job"/smallbaselineApp.cfg
-    save_gdal.py velocity.h5 -d velocity -o velocity_${burst_job}.tif
-    save_gdal.py velocity.h5 -d annualAmplitude -o annualAmplitude_${burst_job}.tif
+    save_gdal.py "$mintpy_folder"/"$burst_job"/velocity.h5 -d velocity -o "$mintpy_folder"/"$burst_job"/velocity_${burst_job}.tif
+    save_gdal.py "$mintpy_folder"/"$burst_job"/velocity.h5 -d annualAmplitude -o "$mintpy_folder"/"$burst_job"/annualAmplitude_${burst_job}.tif
 
 fi

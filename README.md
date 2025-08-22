@@ -42,7 +42,7 @@ echo 'machine urs.earthdata.nasa.gov
 To run, use the following commands:  <br>
 1. To submit jobs to HyP3: <br>
 ```bash
-./run_hyp3_workflow.sh 1 job_name min_lon max_lon min_lat max_lat orb max_temp_base_days
+./run_hyp3_workflow.sh 1 job_name min_lon max_lon min_lat max_lat orb max_temp_base_days date1 date2
 ```
 
 where: <br>
@@ -53,20 +53,24 @@ where: <br>
 ```max_lat``` : Maximum latitude of AOI <br>
 ```orb``` : Relative orbit (can be obtained through the [ASF Vertex Data Search](https://search.asf.alaska.edu/#/)) <br>
 ```max_temp_base_days``` : maximum temporal baseline for nearest neighbor pairs  <br>
+```date1``` : start date  <br>
+```date2``` : end date  <br>
  <br>
 
 You will be prompted to check the created text file to ensure you are submitting the correct dates.
  <br>
 2.  Once submitted jobs are finished, download and prepare HyP3 interferograms, and run MintPy with default settings:<br>
  ```bash
-./run_hyp3_workflow.sh 2 job_name
+./run_hyp3_workflow.sh 2 job_name data_folder mintpy_folder
 ```
 
 where: <br>
 ```ref_Scene_ID``` : Reference scene ID <br>
 ```sec_Scene_ID``` : Secondary scene ID   <br>
 ```job_name```: HyP3 job name <br>
-```filter_strength``` : interferogram filter strength <br>
+```data_folder``` : folder to download interferograms <br>
+```mintpy_folder``` : folder to run MintPy <br>
+
  <br>
 ## Contributing
 Contributions are encouraged! I will do my best to continue updating this script, but if you've found ways to improve it on your own, feel free to create a PR using the following:
