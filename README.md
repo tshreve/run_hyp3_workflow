@@ -72,7 +72,9 @@ where: <br>
 ```mintpy_folder``` : folder to run MintPy <br>
 
  <br>
+ 
 ## Contributing
+
 Contributions are encouraged! I will do my best to continue updating this script, but if you've found ways to improve it on your own, feel free to create a PR using the following:
 
 1. Fork the repository.
