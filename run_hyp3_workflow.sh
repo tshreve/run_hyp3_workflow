@@ -21,7 +21,7 @@ if [ "$STEP" == "0" ]; then
         exit 1
     fi
 
-    echo "=== STEP 1: Submitting jobs to Hyp3 (default no yearlong pairs) ==="
+    echo "=== STEP 1: Submitting jobs to Hyp3 (default summer yearlong pairs) ==="
     ./submit_multiburst.py "$burst_job" $8 True True False $3 $4 $5 $6 $7 $9 ${10}
 fi
 
@@ -43,7 +43,7 @@ if [ "$STEP" == "1" ]; then
         exit 1
     fi
 
-    echo "=== STEP 1: Submitting jobs to Hyp3 (default no yearlong pairs) ==="
+    echo "=== STEP 1: Submitting jobs to Hyp3 (default summer yearlong pairs) ==="
     ## Submit to Hyp3 
     ./submit_multiburst.py "$burst_job" $8 False True False  $3 $4 $5 $6 $7 $9 ${10}
 
